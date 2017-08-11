@@ -14,6 +14,8 @@ module Payola
 
         subscription.plan = plan
         subscription.quantity = quantity
+        subscription.cancel_at_period_end = false
+
         subscription.save!
 
         subscription.instrument_plan_changed(old_plan)
