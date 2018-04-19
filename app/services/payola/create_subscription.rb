@@ -28,7 +28,7 @@ module Payola
         s.owner = owner
         s.amount = plan.amount
       end
-      
+
       Payola.queue!(Payola::ProcessSubscription, sub.guid) if sub.save
 
       sub
