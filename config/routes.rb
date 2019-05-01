@@ -9,7 +9,7 @@ Payola::Engine.routes.draw do
 #  match '/cancel_subscription/:guid'      => 'subscriptions#destroy',  via: :delete, as: :cancel_subscription
 #  match '/change_plan/:guid'              => 'subscriptions#change_plan', via: :post, as: :change_subscription_plan
   match '/change_quantity/:guid'          => 'subscriptions#change_quantity', via: :post, as: :change_subscription_quantity
-  match '/update_card/:guid'              => 'subscriptions#update_card', via: :post, as: :update_card
+  match '/update_card/:guid'              => 'subscriptions#update_card', via: :put, as: :update_card
   match '/destroy_card/:guid'              => 'subscriptions#destroy_card', via: :delete, as: :destroy_subscription_card
 
   match '/update_customer/:id'            => 'customers#update', via: :post, as: :update_customer
