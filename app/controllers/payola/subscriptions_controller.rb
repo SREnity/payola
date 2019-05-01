@@ -5,7 +5,7 @@ module Payola
     include Payola::AsyncBehavior
 
     before_action :find_plan_coupon_and_quantity, only: [:create, :change_plan]
-    before_action :check_modify_permissions, only: [:destroy, :change_plan, :change_quantity, :update_card]
+    before_action :check_modify_permissions, only: [:destroy, :change_plan, :change_quantity, :update_card, :destroy_card]
 
     def show
       show_object(Subscription)
@@ -45,6 +45,14 @@ module Payola
       Payola::UpdateCard.call(@subscription, params[:stripeToken])
 
       confirm_with_message(t('payola.subscriptions.card_updated'))
+    end
+
+    # TODO: Hack for when we only allow one card per subscription
+    def destroy_card
+      @subscription = Subscription.find_by!(guid: params[:guid])
+      Payola::DestroySubscriptionCard.call(@subscription)
+
+      confirm_with_message(t('payola.subscriptions.card_deleted'))
     end
 
     private
