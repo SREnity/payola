@@ -56,13 +56,13 @@ var PayolaCreditCardSubscriptionForm = {
                 type: "PUT",
                 url: action,
                 data: form.serialize(),
-                success: function(data) { PayolaCreditCardSubscriptionForm.poll(form, 60, data.guid, base_path); },
+                success: function(data) { },
                 error: function(data) { PayolaCreditCardSubscriptionForm.showError(form, jQuery.parseJSON(data.responseText).error); }
             });
         }
     },
 
-    poll: function(form, num_retries_left, guid, base_path) {
+/*    poll: function(form, num_retries_left, guid, base_path) {
         if (num_retries_left === 0) {
             PayolaCreditCardSubscriptionForm.showError(form, "This seems to be taking too long. Please contact support and give them transaction ID: " + guid);
         }
@@ -85,7 +85,7 @@ var PayolaCreditCardSubscriptionForm = {
             error: errorHandler
         });
     },
-
+*/
     showError: function(form, message) {
         $('.payola-spinner').hide();
         $(form).find(':submit')

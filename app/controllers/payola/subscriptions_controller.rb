@@ -58,7 +58,13 @@ module Payola
       @subscription = Subscription.find_by!(guid: params[:guid])
       Payola::DestroySubscriptionCard.call(@subscription)
 
-      confirm_with_message(t('payola.subscriptions.card_deleted'))
+      respond_to do |format|
+        if @subscription.errors.empty?
+          format.js { render :delete_card_success, notice: t('payola.subscriptions.card_deleted') }
+        else
+          format.js { render :delete_card_failure }
+        end
+      end
     end
 
     private

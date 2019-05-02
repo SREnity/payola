@@ -1,6 +1,6 @@
 $('#update-card-details').hide();
 $('#card_number').val("");
 $('#card_code').val("");
-$('#current_card_info').val("<%= @subscription.card_type %> ending in <%= @subscription.card_last4 %>");
-$('#current_card_expiry').val("Expires on <%= @subscription.card_expiration %>");
+$('#current_card_info').text("<%= @subscription.card_type %> ending in <%= @subscription.card_last4 %>");
+$('#current_card_expiry').text("Expires on <%= @subscription.card_expiration %>");
 $('#current_card_expiry').attr("color", "<%= @subscription.card_expiration < @subscription.current_period_end ? "red" : "grey" %>");
