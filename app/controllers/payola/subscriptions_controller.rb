@@ -44,7 +44,13 @@ module Payola
       @subscription = Subscription.find_by!(guid: params[:guid])
       Payola::UpdateCard.call(@subscription, params[:stripeToken])
 
-      confirm_with_message(t('payola.subscriptions.card_updated'))
+      respond_to do |format|
+        if @subscription.errors.empty?
+          format.js { render :update_card_success, notice: t('payola.subscriptions.card_updated') } 
+        else
+          format.js { render :update_card_failure }
+        end
+      end
     end
 
     # TODO: Hack for when we only allow one card per subscription
