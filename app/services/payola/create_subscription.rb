@@ -14,7 +14,7 @@ module Payola
       sub = Payola::Subscription.new do |s|
         s.plan = plan
         s.email = email
-        s.stripe_token = params[:stripeToken] if plan.amount > 0
+#        s.stripe_token = params[:stripeToken] if plan.amount > 0
         s.affiliate_id = affiliate.try(:id)
         s.currency = plan.respond_to?(:currency) ? plan.currency : Payola.default_currency
         s.coupon = params[:coupon]

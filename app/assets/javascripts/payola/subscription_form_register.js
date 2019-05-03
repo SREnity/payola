@@ -3,7 +3,7 @@ var PayolaRegistrationForm = {
         $(document).off('submit.payola-register-form').on(
             'submit.payola-register-form', '.payola-register-form',
             function() {
-                e.preventDefault();
+                //e.preventDefault();
                 return PayolaRegistrationForm.handleSubmit($(this));
             }
         );
@@ -29,7 +29,7 @@ var PayolaRegistrationForm = {
 
         var action = $(form).attr('action');
 
-        form.append($('<input type="hidden" name="[user]plan_id">').val(plan_id));
+//        form.append($('<input type="hidden" name="[user]plan_id">').val(plan_id));
         form.append($('<input type="hidden" name="plan_type">').val(plan_type));
         form.append($('<input type="hidden" name="plan_id">').val(plan_id));
         form.append($('<input type="hidden" name="stripeEmail">').val(email));

@@ -84,12 +84,12 @@ module Payola
         end
       end
 
-      if subscription.plan.amount > 0 and not subscription.stripe_token.present?
-        raise "stripeToken required for new customer with paid subscription"
-      end
+      #if subscription.plan.amount > 0 and not subscription.stripe_token.present?
+      #  raise "stripeToken required for new customer with paid subscription"
+      #end
 
       customer_create_params = {
-        source: subscription.stripe_token,
+        #source: subscription.stripe_token,
         email:  subscription.email
       }
 

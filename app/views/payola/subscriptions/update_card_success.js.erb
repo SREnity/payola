@@ -1,4 +1,6 @@
 $('#update-card-details').hide();
+$('#new_card_row').hide();
+$('#current_card_row').show();
 $('#card_number').val("");
 $('#card_code').val("");
 $('#current_card_info').text("<%= @subscription.card_type %> ending in <%= @subscription.card_last4 %>");
