@@ -16,6 +16,7 @@ module Payola
 
     def run
       begin
+        Stripe.api_version = "2018-02-28"
         subscription.verify_charge!
 
         customer = find_or_create_customer
@@ -23,10 +24,17 @@ module Payola
         create_params = {
           plan: subscription.plan.stripe_id,
           quantity: subscription.quantity,
-          tax_percent: subscription.tax_percent
+          tax_percent: subscription.tax_percent,
+          billing_cycle_anchor: Date.today.next_month.at_beginning_of_month.to_time.to_i
         }
         create_params[:trial_end] = subscription.trial_end.to_i if subscription.trial_end.present?
         create_params[:coupon] = subscription.coupon if subscription.coupon.present?
+        if subscription.trial_end.present? and subscription.trial_end.to_i > Date.today.next_month.at_beginning_of_month.to_time.to_i
+          create_params[:billing_cycle_anchor] = Date.today.next_month.next_month.at_beginning_of_month.to_time.to_i 
+        else
+          create_params[:billing_cycle_anchor] = Date.today.next_month.at_beginning_of_month.to_time.to_i 
+        end
+
         stripe_sub = customer.subscriptions.create(create_params)
 
         subscription.update_attributes(
@@ -53,9 +61,11 @@ module Payola
         end
 
         subscription.activate!
+        Stripe.api_version = "2015-02-18"
       rescue Stripe::StripeError, RuntimeError => e
         subscription.update_attributes(error: e.message)
         subscription.fail!
+        Stripe.api_version = "2015-02-18"
       end
 
       subscription
